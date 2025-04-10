@@ -1,12 +1,10 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-@app.route("/")
-def hello():
-    return "Hello World"
-
-if __name__ == "__main__":
-    app.run(debug=True)
-#added a comment
-#added a comment
+@app.route('/register', methods=['POST'])
+def register():
+    data = request.get_json()
+    if not data or 'username' not in data or 'email' not in data:
+        return jsonify({'error': 'Missing data'}), 400
+    return jsonify({'message': 'User registered'}), 201
